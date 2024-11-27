@@ -49,6 +49,18 @@ public  class BusController {
             throw new RuntimeException("Not Found", e);
         }
     }
+
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<String> deleteBus(@PathVariable Long id) {
+        try {
+            String bus =  busservice.deleteById(id);
+            return ResponseEntity.ok(bus);
+        } catch (Exception e) {
+            throw new RuntimeException("Couldn't delete",e);
+}
     }
+
+}
+
 
 

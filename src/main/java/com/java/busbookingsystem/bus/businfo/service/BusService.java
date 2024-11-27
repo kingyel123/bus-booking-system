@@ -43,9 +43,12 @@ public class BusService implements IBusService{
     }
 
     @Override
-    public String deleteById(long id) {
-        return "";
-    }
+    public String deleteById(long id){
 
-
+        if(!busrepository.existsById(id)){
+            return BusConstants.NOT_FOUND;
+        }
+        busrepository.deleteById(id);
+        return BusConstants.DELETE_SUCCESSFUL;
+}
 }
