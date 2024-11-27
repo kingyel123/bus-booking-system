@@ -1,4 +1,4 @@
-package com.java.busbookingsystem;
+package com.java.busbookingsystem.bus.businfo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
