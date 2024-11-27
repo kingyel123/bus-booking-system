@@ -13,31 +13,30 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/bus")
-public class BusController {
+public  class BusController {
     @Autowired
-private BusService busservice;
+    private BusService busservice;
 
-@PostMapping
-    public Bus saveBus(@Validated @RequestBody Bus bus){
-    return busservice.save(bus);
-}
-
-@GetMapping("/Bus")
-List<Bus> getBus(){
-    return busservice.findAll();
-}
-
-@GetMapping("/Bus/{id}")
-public ResponseEntity<Bus> getBusById(@PathVariable Long id) {
-    try{
-
-    Bus bus = busservice.findById(id);
-        return ResponseEntity.ok(bus);
+    @PostMapping
+    public Bus saveBus(@Validated @RequestBody Bus bus) {
+        return busservice.save(bus);
     }
-    catch (Exception e){
-        throw new RuntimeException("Not found", e);
+
+    @GetMapping("/BUS")
+    List<Bus> getBus() {
+        return busservice.findAll();
     }
-}
+
+
+    @GetMapping("/BUS/{id}")
+    public ResponseEntity<Bus> getBusById(@PathVariable Long id) {
+        try {
+            Bus bus = busservice.findById(id);
+            return ResponseEntity.ok(bus);
+        } catch (Exception e) {
+            throw new RuntimeException("Not Found", e);
+        }
+    }
 
     @DeleteMapping("delete/{id}")
     public ResponseEntity<String> deleteBus(@PathVariable Long id) {
@@ -51,7 +50,7 @@ public ResponseEntity<Bus> getBusById(@PathVariable Long id) {
     }
 
     @PutMapping("put/{id}")
-    public  ResponseEntity<String> updateBusbyId(@RequestBody Bus bus, @PathVariable Long id){
+    public  ResponseEntity<String> updateBusbyId(@RequestBody Bus bus, @PathVariable Long id) {
         bus.setId(id);
         String response = busservice.update(bus);
 
@@ -60,7 +59,7 @@ public ResponseEntity<Bus> getBusById(@PathVariable Long id) {
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
-
+    }
     }
 
-}
+
