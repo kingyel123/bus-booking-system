@@ -33,6 +33,22 @@ public  class BusController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
     }
+
+    @GetMapping("/BUS")
+    List<Bus> getBus() {
+        return busservice.findAll();
+    }
+
+
+    @GetMapping("/BUS/{id}")
+    public ResponseEntity<Bus> getBusById(@PathVariable Long id) {
+        try {
+            Bus bus = busservice.findById(id);
+            return ResponseEntity.ok(bus);
+        } catch (Exception e) {
+            throw new RuntimeException("Not Found", e);
+        }
+    }
     }
 
 
