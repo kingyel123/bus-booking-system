@@ -15,15 +15,18 @@ public class BusService implements IBusService{
     private BusRepository busrepository;
 
     @Override
-    public List<Bus> findAll(){return  busrepository.findAll();};
+    public List<Bus> findAll() {
+        return List.of();
+    }
+
     @Override
     public Bus save(@NonNull Bus bus){
         return busrepository.save(bus);
     }
 
-@Override
-    public Bus findById(long id) throws  Exception{
-        return busrepository.findById(id).orElseThrow(()->new Exception(BusConstants.NOT_FOUND));
+    @Override
+    public Bus findById(long id) throws Exception {
+        return null;
     }
 
     @Override
@@ -41,14 +44,10 @@ public class BusService implements IBusService{
                 .orElse(BusConstants.NOT_FOUND); // Return not found message if the bus doesn't exist
     }
 
-
     @Override
-    public String deleteById(long id){
-
-        if(!busrepository.existsById(id)){
-    return BusConstants.NOT_FOUND;
-        }
-         busrepository.deleteById(id);
-        return BusConstants.DELETE_SUCCESSFUL;
+    public String deleteById(long id) {
+        return "";
     }
+
+
 }

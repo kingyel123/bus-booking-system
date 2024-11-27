@@ -22,33 +22,6 @@ public  class BusController {
         return busservice.save(bus);
     }
 
-    @GetMapping("/BUS")
-    List<Bus> getBus() {
-        return busservice.findAll();
-    }
-
-
-    @GetMapping("/BUS/{id}")
-    public ResponseEntity<Bus> getBusById(@PathVariable Long id) {
-        try {
-            Bus bus = busservice.findById(id);
-            return ResponseEntity.ok(bus);
-        } catch (Exception e) {
-            throw new RuntimeException("Not Found", e);
-        }
-    }
-
-    @DeleteMapping("delete/{id}")
-    public ResponseEntity<String> deleteBus(@PathVariable Long id) {
-        try {
-           String bus =  busservice.deleteById(id);
-            return ResponseEntity.ok(bus);
-        } catch (Exception e) {
-            throw new RuntimeException("Couldn't delete",e);
-        }
-
-    }
-
     @PutMapping("put/{id}")
     public  ResponseEntity<String> updateBusbyId(@RequestBody Bus bus, @PathVariable Long id) {
         bus.setId(id);
