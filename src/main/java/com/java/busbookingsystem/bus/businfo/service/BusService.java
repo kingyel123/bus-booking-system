@@ -15,9 +15,7 @@ public class BusService implements IBusService{
     private BusRepository busrepository;
 
     @Override
-    public List<Bus> findAll() {
-        return List.of();
-    }
+    public List<Bus> findAll(){return  busrepository.findAll();};
 
     @Override
     public Bus save(@NonNull Bus bus){
@@ -25,8 +23,8 @@ public class BusService implements IBusService{
     }
 
     @Override
-    public Bus findById(long id) throws Exception {
-        return null;
+    public Bus findById(long id) throws  Exception{
+        return busrepository.findById(id).orElseThrow(()->new Exception(BusConstants.NOT_FOUND));
     }
 
     @Override
