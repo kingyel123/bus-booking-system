@@ -26,3 +26,7 @@ replay_pid*
 #SQL Server Files
 *.mdf
 *.idf
+*.jar
+*.jar !gradle/wrapper/gradle-wrapper.jar
+
+

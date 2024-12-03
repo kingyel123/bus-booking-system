@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.java.busbookingsystem.BusBookingSystemApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-12-03T13:10:51" hostname="CHIMI" time="0.496">
+  <properties/>
+  <testcase name="contextLoads()" classname="com.java.busbookingsystem.BusBookingSystemApplicationTests" time="0.496"/>
+  <system-out><![CDATA[19:10:45.174 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.java.busbookingsystem.BusBookingSystemApplicationTests]: BusBookingSystemApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+19:10:45.328 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.java.busbookingsystem.BusBookingSystemApplication for test class com.java.busbookingsystem.BusBookingSystemApplicationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.4.0)
+
+2024-12-03T19:10:45.868+06:00  INFO 27944 --- [bus-booking-system] [    Test worker] c.j.b.BusBookingSystemApplicationTests   : Starting BusBookingSystemApplicationTests using Java 21.0.5 with PID 27944 (started by chimi in C:\Users\chimi\OneDrive\Desktop\git clone\bus-booking-system)
+2024-12-03T19:10:45.870+06:00  INFO 27944 --- [bus-booking-system] [    Test worker] c.j.b.BusBookingSystemApplicationTests   : No active profile set, falling back to 1 default profile: "default"
+2024-12-03T19:10:46.782+06:00  INFO 27944 --- [bus-booking-system] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-12-03T19:10:46.855+06:00  INFO 27944 --- [bus-booking-system] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 61 ms. Found 2 JPA repository interfaces.
+2024-12-03T19:10:47.596+06:00  INFO 27944 --- [bus-booking-system] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-03T19:10:47.699+06:00  INFO 27944 --- [bus-booking-system] [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.2.Final
+2024-12-03T19:10:47.736+06:00  INFO 27944 --- [bus-booking-system] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-12-03T19:10:48.126+06:00  INFO 27944 --- [bus-booking-system] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-12-03T19:10:48.178+06:00  INFO 27944 --- [bus-booking-system] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-12-03T19:10:48.363+06:00  INFO 27944 --- [bus-booking-system] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5788722f
+2024-12-03T19:10:48.365+06:00  INFO 27944 --- [bus-booking-system] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-12-03T19:10:48.387+06:00  WARN 27944 --- [bus-booking-system] [    Test worker] org.hibernate.orm.deprecation            : HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-12-03T19:10:48.388+06:00  WARN 27944 --- [bus-booking-system] [    Test worker] org.hibernate.orm.deprecation            : HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2024-12-03T19:10:48.404+06:00  INFO 27944 --- [bus-booking-system] [    Test worker] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2024-12-03T19:10:49.188+06:00  INFO 27944 --- [bus-booking-system] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-12-03T19:10:49.426+06:00  INFO 27944 --- [bus-booking-system] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-12-03T19:10:50.025+06:00  INFO 27944 --- [bus-booking-system] [    Test worker] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2024-12-03T19:10:50.026+06:00  WARN 27944 --- [bus-booking-system] [    Test worker] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2024-12-03T19:10:50.147+06:00  WARN 27944 --- [bus-booking-system] [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-12-03T19:10:51.086+06:00  INFO 27944 --- [bus-booking-system] [    Test worker] c.j.b.BusBookingSystemApplicationTests   : Started BusBookingSystemApplicationTests in 5.555 seconds (process running for 6.951)
+]]></system-out>
+  <system-err><![CDATA[Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build what is described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html#0.3
+WARNING: A Java agent has been loaded dynamically (C:\Users\chimi\.gradle\caches\modules-2\files-2.1\net.bytebuddy\byte-buddy-agent\1.15.10\e8eb255b2c378b9a6c7341e7b0e12f0a5636377\byte-buddy-agent-1.15.10.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+]]></system-err>
+</testsuite>
