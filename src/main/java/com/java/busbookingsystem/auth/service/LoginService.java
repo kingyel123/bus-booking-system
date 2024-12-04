@@ -5,7 +5,7 @@ import com.java.busbookingsystem.auth.helper.JwtService;
 import com.java.busbookingsystem.auth.helper.UserInfoService;
 import com.java.busbookingsystem.auth.model.AuthRequest;
 import com.java.busbookingsystem.utils.exception.GlobalExceptionWrapper;
-import lombok.NonNull;
+import io.micrometer.common.lang.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

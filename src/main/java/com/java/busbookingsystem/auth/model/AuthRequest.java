@@ -1,5 +1,6 @@
 package com.java.busbookingsystem.auth.model;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
