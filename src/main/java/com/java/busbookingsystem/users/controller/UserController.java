@@ -26,12 +26,28 @@ public class UserController {
      * @return The details of the authenticated user.
      */
 
+    @GetMapping("/self")
+    @PreAuthorize("hasAuthority('USER')")
+    public ResponseEntity<RestResponse> fetchSelfInfo() {
+        HashMap<String, Object> listHashMap = new HashMap<>();
+        listHashMap.put("user", userService.fetchSelfInfo());
+        return RestHelper.responseSuccess(listHashMap);
+    }
+
     /**
      * Fetches the instructor by identifier.
      *
      * @param id The unique identifier of the instructor.
      * @return The instructor entity.
      */
+
+    @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<RestResponse> findById(@PathVariable long id) {
+        HashMap<String, Object> listHashMap = new HashMap<>();
+        listHashMap.put("user", userService.findById(id));
+        return RestHelper.responseSuccess(listHashMap);
+    }
 
 
     /**
@@ -40,7 +56,13 @@ public class UserController {
      * @return The list of instructor entities.
      */
 
-
+    @GetMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<RestResponse> findAll() {
+        HashMap<String, Object> listHashMap = new HashMap<>();
+        listHashMap.put("user", userService.findAll());
+        return RestHelper.responseSuccess(listHashMap);
+    }
     /**
      * Signing up the new instructor.
      *
