@@ -25,13 +25,6 @@ public class UserController {
      *
      * @return The details of the authenticated user.
      */
-    @GetMapping("/self")
-    @PreAuthorize("hasAuthority('USER')")
-    public ResponseEntity<RestResponse> fetchSelfInfo() {
-        HashMap<String, Object> listHashMap = new HashMap<>();
-        listHashMap.put("user", userService.fetchSelfInfo());
-        return RestHelper.responseSuccess(listHashMap);
-    }
 
     /**
      * Fetches the instructor by identifier.
@@ -39,26 +32,14 @@ public class UserController {
      * @param id The unique identifier of the instructor.
      * @return The instructor entity.
      */
-    @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<RestResponse> findById(@PathVariable long id) {
-        HashMap<String, Object> listHashMap = new HashMap<>();
-        listHashMap.put("user", userService.findById(id));
-        return RestHelper.responseSuccess(listHashMap);
-    }
+
 
     /**
      * Fetches all the instructor entities in the system.
      *
      * @return The list of instructor entities.
      */
-    @GetMapping
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<RestResponse> findAll() {
-        HashMap<String, Object> listHashMap = new HashMap<>();
-        listHashMap.put("user", userService.findAll());
-        return RestHelper.responseSuccess(listHashMap);
-    }
+
 
     /**
      * Signing up the new instructor.
@@ -79,12 +60,7 @@ public class UserController {
      * @param user The updated instructor entity.
      * @return The message indicating the confirmation on updated instructor entity.
      */
-    @PatchMapping("/{id}")
-    @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
-    public ResponseEntity<RestResponse> update(@PathVariable long id, @Validated @RequestBody User user) {
-        String message = userService.update(id, user);
-        return RestHelper.responseMessage(message);
-    }
+
 
     /**
      * Deletes the instructor by id.
@@ -92,10 +68,5 @@ public class UserController {
      * @param id The unique identifier of the entity.
      * @return The message indicating the confirmation on deleted instructor entity.
      */
-    @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<RestResponse> delete(@PathVariable long id) {
-        String message = userService.deleteById(id);
-        return RestHelper.responseMessage(message);
-    }
+
 }
