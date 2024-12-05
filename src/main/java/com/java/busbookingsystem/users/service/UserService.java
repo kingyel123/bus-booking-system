@@ -1,10 +1,5 @@
 package com.java.busbookingsystem.users.service;
 
-
-
-
-
-
 import com.java.busbookingsystem.auth.helper.UserInfoDetails;
 import com.java.busbookingsystem.users.mapper.UserMapper;
 import com.java.busbookingsystem.users.model.User;
@@ -24,7 +19,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.java.busbookingsystem.utils.constants.InstructorConstants.*;
-
 
 @Service
 public class UserService implements IUserService{
@@ -56,53 +50,50 @@ public class UserService implements IUserService{
     }
 
     @Override
-    public UserDTO findById(long id) {
-        User user = this.userRepository.findById(id).orElseThrow(
+    public User findById(long id) {
+        return this.userRepository.findById(id).orElseThrow(
                 () -> new GlobalExceptionWrapper.NotFoundException(String.format(NOT_FOUND_MESSAGE, USER.toLowerCase())));
-        return UserMapper.toDTO(user);
     }
 
-    public UserDTO fetchSelfInfo() {
+    public User fetchSelfInfo() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = ((UserInfoDetails) authentication.getPrincipal()).getUsername();
         return  findByEmail(email).orElseThrow(
                 () -> new GlobalExceptionWrapper.NotFoundException(String.format(NOT_FOUND_MESSAGE, USER.toLowerCase())));
     }
 
-    public Optional<UserDTO> findByEmail(@NonNull String emailId) {
-        Optional<User> instructor = this.userRepository.findByEmail(emailId);
-        return UserMapper.toDTO(instructor);
+    private Optional<User> findByEmail(@NonNull String emailId) {
+        return this.userRepository.findByEmail(emailId);
     }
 
     @Override
     public String update(long id, @NonNull User entity) {
-        UserDTO authenticatedUser = fetchSelfInfo();
-        User userEntity = UserMapper.toEntity(authenticatedUser);
+        User authenticatedUser = fetchSelfInfo();
 
         //Allow update by admin to the instructor info.
         if(Arrays.stream(authenticatedUser.getRoles().split(",")).anyMatch(role -> role.trim().equalsIgnoreCase("ADMIN"))){
-            userEntity = UserMapper.toEntity(findById(id));
+            authenticatedUser = findById(id);
         }
 
-        userEntity.setName(entity.getName());
-        userEntity.setAddress(entity.getAddress());
-        userEntity.setPassword(entity.getPassword());
-        this.userRepository.save(userEntity);
+        authenticatedUser.setName(entity.getName());
+        authenticatedUser.setAddress(entity.getAddress());
+        authenticatedUser.setEmail(entity.getEmail());
+        authenticatedUser.setPassword(encoder.encode(entity.getPassword()));
+        this.userRepository.save(authenticatedUser);
         return String.format(UPDATED_SUCCESSFULLY_MESSAGE, USER);
     }
 
     @Override
     @Transactional
     public String deleteById(long id) {
-        UserDTO authenticatedUser = fetchSelfInfo();
-        User userEntity = UserMapper.toEntity(authenticatedUser);
+        User authenticatedUser = fetchSelfInfo();
 
         //Allow to delete by admin to the instructor info.
         if(Arrays.stream(authenticatedUser.getRoles().split(",")).anyMatch(role -> role.trim().equalsIgnoreCase("ADMIN"))){
-            userEntity = UserMapper.toEntity(findById(id));
+            authenticatedUser = findById(id);
         }
 
-        this.userRepository.deleteById(userEntity.getId());
+        this.userRepository.deleteById(authenticatedUser.getId());
         return String.format(DELETED_SUCCESSFULLY_MESSAGE, USER);
     }
 
