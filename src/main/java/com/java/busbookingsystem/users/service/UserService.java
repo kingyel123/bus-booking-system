@@ -1,18 +1,14 @@
 package com.java.busbookingsystem.users.service;
 
 
-
-
-
-
 import com.java.busbookingsystem.auth.helper.UserInfoDetails;
 import com.java.busbookingsystem.users.mapper.UserMapper;
 import com.java.busbookingsystem.users.model.User;
 import com.java.busbookingsystem.users.model.UserDTO;
 import com.java.busbookingsystem.users.repository.UserRepository;
 import com.java.busbookingsystem.utils.exception.GlobalExceptionWrapper;
+import io.micrometer.common.lang.NonNull;
 import jakarta.transaction.Transactional;
-import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -86,7 +82,7 @@ public class UserService implements IUserService{
 
         userEntity.setName(entity.getName());
         userEntity.setAddress(entity.getAddress());
-        userEntity.setPassword(entity.getPassword());
+        userEntity.setPassword(encoder.encode(entity.getPassword()));
         this.userRepository.save(userEntity);
         return String.format(UPDATED_SUCCESSFULLY_MESSAGE, USER);
     }

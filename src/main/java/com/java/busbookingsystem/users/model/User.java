@@ -48,4 +48,51 @@ public class User extends AuditEntity {
 
     private String roles;
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public @NotBlank(message = "Email is required and cannot be empty") @Email(message = "Invalid email format") String getEmail() {
+        return email;
+    }
+
+    public void setEmail(@NotBlank(message = "Email is required and cannot be empty") @Email(message = "Invalid email format") String email) {
+        this.email = email;
+    }
+
+    public @NotBlank(message = "Password is required and cannot be empty") String getPassword() {
+        return password;
+    }
+
+    public void setPassword(@NotBlank(message = "Password is required and cannot be empty") String password) {
+        this.password = password;
+    }
+
+    public String getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
+    }
 }
