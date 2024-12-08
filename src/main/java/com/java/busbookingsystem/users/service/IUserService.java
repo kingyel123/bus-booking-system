@@ -7,5 +7,5 @@ import com.java.busbookingsystem.users.model.UserDTO;
 import com.java.busbookingsystem.utils.IGenericCrudService;
 
 public interface IUserService extends IGenericCrudService<User, UserDTO> {
-        UserDTO fetchSelfInfo();
+        User fetchSelfInfo();
         }

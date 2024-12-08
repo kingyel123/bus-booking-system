@@ -8,6 +8,7 @@ import com.java.busbookingsystem.users.model.UserDTO;
 import com.java.busbookingsystem.users.repository.UserRepository;
 import com.java.busbookingsystem.utils.exception.GlobalExceptionWrapper;
 import io.micrometer.common.lang.NonNull;
+import io.micrometer.common.util.StringUtils;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -52,53 +53,67 @@ public class UserService implements IUserService{
     }
 
     @Override
-    public UserDTO findById(long id) {
-        User user = this.userRepository.findById(id).orElseThrow(
-                () -> new GlobalExceptionWrapper.NotFoundException(String.format(NOT_FOUND_MESSAGE, USER.toLowerCase())));
+    public UserDTO fetchById(long id) {
+        User user = findById(id);
         return UserMapper.toDTO(user);
     }
 
-    public UserDTO fetchSelfInfo() {
+
+    private User findById(long id) {
+        return this.userRepository.findById(id).orElseThrow(
+                () -> new GlobalExceptionWrapper.NotFoundException(String.format(NOT_FOUND_MESSAGE,
+                        USER.toLowerCase())));
+    }
+    @Override
+    public User fetchSelfInfo() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = ((UserInfoDetails) authentication.getPrincipal()).getUsername();
         return  findByEmail(email).orElseThrow(
                 () -> new GlobalExceptionWrapper.NotFoundException(String.format(NOT_FOUND_MESSAGE, USER.toLowerCase())));
     }
 
-    public Optional<UserDTO> findByEmail(@NonNull String emailId) {
-        Optional<User> instructor = this.userRepository.findByEmail(emailId);
-        return UserMapper.toDTO(instructor);
+    public Optional<User> findByEmail(@NonNull String emailId) {
+        return  this.userRepository.findByEmail(emailId);
     }
 
     @Override
-    public String update(long id, @NonNull User entity) {
-        UserDTO authenticatedUser = fetchSelfInfo();
-        User userEntity = UserMapper.toEntity(authenticatedUser);
+    public String update(long id, @lombok.NonNull UserDTO userDTO) {
+        User authenticatedUser = fetchSelfInfo();
 
         //Allow update by admin to the instructor info.
-        if(Arrays.stream(authenticatedUser.getRoles().split(",")).anyMatch(role -> role.trim().equalsIgnoreCase("ADMIN"))){
-            userEntity = UserMapper.toEntity(findById(id));
+        if (Arrays.stream(authenticatedUser.getRoles().split(",")).anyMatch(role -> role.trim().equalsIgnoreCase(
+                "ADMIN"))) {
+            authenticatedUser = findById(id);
         }
 
-        userEntity.setName(entity.getName());
-        userEntity.setAddress(entity.getAddress());
-        userEntity.setPassword(encoder.encode(entity.getPassword()));
-        this.userRepository.save(userEntity);
+
+
+        if (StringUtils.isNotBlank(userDTO.getName())) {
+            authenticatedUser.setName(userDTO.getName());
+        }
+
+        if (StringUtils.isNotBlank(userDTO.getAddress())) {
+            authenticatedUser.setAddress(userDTO.getAddress());
+        }
+        if (StringUtils.isNotBlank(userDTO.getPassword())){
+            authenticatedUser.setPassword(encoder.encode(userDTO.getPassword()));
+        }
+
+        this.userRepository.save(authenticatedUser);
         return String.format(UPDATED_SUCCESSFULLY_MESSAGE, USER);
     }
 
     @Override
     @Transactional
     public String deleteById(long id) {
-        UserDTO authenticatedUser = fetchSelfInfo();
-        User userEntity = UserMapper.toEntity(authenticatedUser);
+        User authenticatedUser = fetchSelfInfo();
 
         //Allow to delete by admin to the instructor info.
         if(Arrays.stream(authenticatedUser.getRoles().split(",")).anyMatch(role -> role.trim().equalsIgnoreCase("ADMIN"))){
-            userEntity = UserMapper.toEntity(findById(id));
+            authenticatedUser = findById(id);
         }
 
-        this.userRepository.deleteById(userEntity.getId());
+        this.userRepository.deleteById(authenticatedUser.getId());
         return String.format(DELETED_SUCCESSFULLY_MESSAGE, USER);
     }
 

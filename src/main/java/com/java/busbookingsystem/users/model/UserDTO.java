@@ -13,6 +13,7 @@ public class UserDTO {
     private String address;
     private String email;
     private String roles;
+    private String password;
 
     public long getId() {
         return id;
@@ -53,4 +54,7 @@ public class UserDTO {
     public void setRoles(String roles) {
         this.roles = roles;
     }
+
+    public void setPassword(String password){this.password =password; }
+    public String getPassword(){return password;}
 }

@@ -3,6 +3,7 @@ package com.java.busbookingsystem.users.controller;
 
 
 import com.java.busbookingsystem.users.model.User;
+import com.java.busbookingsystem.users.model.UserDTO;
 import com.java.busbookingsystem.users.service.UserService;
 import com.java.busbookingsystem.utils.RestHelper;
 import com.java.busbookingsystem.utils.RestResponse;
@@ -45,9 +46,10 @@ public class UserController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<RestResponse> findById(@PathVariable long id) {
         HashMap<String, Object> listHashMap = new HashMap<>();
-        listHashMap.put("user", userService.findById(id));
+        listHashMap.put("user", userService.fetchById(id));
         return RestHelper.responseSuccess(listHashMap);
     }
+
 
 
     /**
@@ -79,9 +81,16 @@ public class UserController {
     /**
      * Updates the existing instructor entity.
      *
-     * @param user The updated instructor entity.
+     * @param userDTO The updated instructor entity.
      * @return The message indicating the confirmation on updated instructor entity.
      */
+    @PatchMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('USER','ADMIN')")
+    public ResponseEntity<RestResponse> update(@PathVariable long id,
+                                               @Validated @RequestBody UserDTO userDTO) {
+        String message = userService.update(id, userDTO);
+        return RestHelper.responseMessage(message);
+    }
 
 
     /**
