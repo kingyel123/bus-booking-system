@@ -34,8 +34,8 @@ public class UserService implements IUserService{
 
     @Override
     public List<UserDTO> findAll() {
-        List<User> instructor = this.userRepository.findAll();
-        return UserMapper.toDTO(instructor);
+        List<User> user = this.userRepository.findAll();
+        return UserMapper.toDTO(user);
     }
 
     @Override
