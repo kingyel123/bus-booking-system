@@ -48,6 +48,7 @@ public class User extends AuditEntity {
 
     private String roles;
 
+
     public long getId() {
         return id;
     }
@@ -87,7 +88,6 @@ public class User extends AuditEntity {
     public void setPassword(@NotBlank(message = "Password is required and cannot be empty") String password) {
         this.password = password;
     }
-
     public String getRoles() {
         return roles;
     }
@@ -95,4 +95,7 @@ public class User extends AuditEntity {
     public void setRoles(String roles) {
         this.roles = roles;
     }
+
+
+
 }

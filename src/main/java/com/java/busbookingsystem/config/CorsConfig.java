@@ -12,6 +12,7 @@ public class CorsConfig {
     @Value("${cors.originUrl}")
     private String originUrl;
 
+
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {

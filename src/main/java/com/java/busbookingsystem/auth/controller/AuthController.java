@@ -15,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -32,12 +33,12 @@ public class AuthController {
      * @param authRequest The authentication credentials containing object
      * @return The access keys and refresh keys for the associated authenticated user.
      */
-    @PostMapping()
+    @PostMapping("/login")
     public ResponseEntity<RestResponse> login(@RequestBody AuthRequest authRequest) {
-        HashMap<String, Object> listHashMap = new HashMap<>();
-        listHashMap.put("access_token", authService.authenticate(authRequest));
+        Map<String, Object> listHashMap = new HashMap<>(authService.authenticate(authRequest));
         return RestHelper.responseSuccess(listHashMap);
     }
+
     /**
      * Handles token refresh using a valid refresh token
      *
@@ -48,7 +49,7 @@ public class AuthController {
     public ResponseEntity<RestResponse> refreshToken(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
         // Extract token from Bearer authorization header
         String refreshToken = authorizationHeader.substring(7); // Remove "Bearer "
-        HashMap<String, Object> tokenMap = new HashMap<>(authService.refreshToken(refreshToken));
+        Map<String, Object> tokenMap = new HashMap<>(authService.refreshToken(refreshToken));
         return RestHelper.responseSuccess(tokenMap);
     }
 
@@ -60,7 +61,7 @@ public class AuthController {
      */
     @PostMapping("/sign-up")
     public ResponseEntity<RestResponse> save(@Validated @RequestBody User user) {
-        HashMap<String, Object> listHashMap = new HashMap<>();
+        Map<String, Object> listHashMap = new HashMap<>();
         listHashMap.put("user", userService.save(user));
         return RestHelper.responseSuccess(listHashMap);
     }

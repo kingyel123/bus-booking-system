@@ -1,54 +1,101 @@
 package com.java.busbookingsystem.bus.service;
 
-import com.java.busbookingsystem.bus.constants.BusConstants;
+import com.java.busbookingsystem.Exception.ResourceNotFoundException;
 import com.java.busbookingsystem.bus.Repository.BusRepository;
 import com.java.busbookingsystem.bus.model.Bus;
-import lombok.NonNull;
+import com.java.busbookingsystem.utils.exception.GlobalExceptionWrapper;
+import io.micrometer.common.lang.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class BusService implements IBusService{
-@Autowired
+   @Autowired
     private BusRepository busrepository;
 
     @Override
-    public List<Bus> findAll(){return  busrepository.findAll();};
-
-    @Override
     public Bus save(@NonNull Bus bus){
-        return busrepository.save(bus);
-    }
-
-    @Override
-    public Bus findById(long id) throws  Exception{
-        return busrepository.findById(id).orElseThrow(()->new Exception(BusConstants.NOT_FOUND));
-    }
-
-    @Override
-    public String update(@NonNull Bus bus)  {
-        long id = bus.getId(); // Assuming Bus has a method to get its ID
-        return busrepository.findById(id)
-                .map(bus1 -> {
-                    bus1.setBusNo(bus.getBusNo());
-                    bus1.setSeatsAvailability(bus.getSeatsAvailability());
-                    bus1.setVia(bus.getVia());
-                    bus1.setDeparture(bus.getDeparture());
-                    busrepository.save(bus1); // Save the updated bus object
-                    return BusConstants.UPDATE_SUCCESSFUL; // Return success message
-                })
-                .orElse(BusConstants.NOT_FOUND); // Return not found message if the bus doesn't exist
-    }
-
-    @Override
-    public String deleteById(long id){
-
-        if(!busrepository.existsById(id)){
-            return BusConstants.NOT_FOUND;
+        try {
+            if (busrepository.existsById(bus.getId())){
+                throw new GlobalExceptionWrapper.BadRequestException("Bus with id '" + bus.getBusNo() + "' already exists ");
+            }
+            return busrepository.save(bus);
+        } catch (DataIntegrityViolationException e) {
+            throw new GlobalExceptionWrapper.BadRequestException("Bus with this id already exists");
         }
-        busrepository.deleteById(id);
-        return BusConstants.DELETE_SUCCESSFUL;
-}
-}
+    }
+
+
+    @Override
+    public List<Bus> findAll() {
+        // Fetch all movies from the database
+        return busrepository.findAll();
+    }
+
+
+
+
+
+    @Override
+    public Bus findById(long id) {
+        return busrepository.findById(id)
+                .orElseThrow(() -> new GlobalExceptionWrapper.NotFoundException(
+                        String.format("Bus not found with id: %d", id)));
+    }
+
+
+
+    @Override
+    public String update(long id, Long entity) {
+        return "";
+    }
+
+    @Override
+    public Bus save(Long entity) {
+        return null;
+    }
+
+    @Override
+    public Bus fetchById(long id) throws Exception {
+        return null;
+    }
+    @Override
+    public String update(long id, Bus entity) {
+        return "";
+    }
+    @Override
+    public String update(Bus entity) {
+        return "";
+    }
+
+    @Override
+    public String deleteById(long id) {
+        Bus bus = findById(id);
+        busrepository.delete(bus);
+        return null;
+    }
+
+    @Override
+    public Bus updateBus(Long id, Bus bus) {
+        Bus bus1 = busrepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Bus not found with id: " + id));
+
+        // Update the fields with values from the bus parameter
+        bus1.setBusNo(bus.getBusNo());
+        bus1.setModel(bus.getModel());
+        bus1.setDepartureFrom(bus.getDepartureFrom());
+        bus1.setDestination(bus.getDestination());
+        bus1.setAmenities(bus.getAmenities());
+        bus1.setDeparture(bus.getDeparture());
+        bus1.setSeatsAvailability(bus.getSeatsAvailability());
+        bus1.setBrand(bus.getBrand());
+        bus1.setPrice(bus.getPrice());
+
+        // Save the updated bus back to the database
+        return busrepository.save(bus1);
+    }
+
+    }
