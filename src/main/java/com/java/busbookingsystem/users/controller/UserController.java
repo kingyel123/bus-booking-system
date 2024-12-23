@@ -14,23 +14,23 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.Map;
 
 @RestController
-@RequestMapping("api/v1/user")
+@RequestMapping("api/v1/users")
 public class UserController {
     @Autowired
     private UserService userService;
 
     /**
-     * Fetch self info of the instructor
+     * Fetch self info of the user
      *
      * @return The details of the authenticated user.
      */
-
     @GetMapping("/self")
-    @PreAuthorize("hasAuthority('USER')")
-    public ResponseEntity<RestResponse> fetchSelfInfo() {
-        HashMap<String, Object> listHashMap = new HashMap<>();
+    @PreAuthorize("hasAnyAuthority('USER','ADMIN')")
+    public ResponseEntity<RestResponse> fetchSelf() {
+        Map<String, Object> listHashMap = new HashMap<>();
         listHashMap.put("user", userService.fetchSelfInfo());
         return RestHelper.responseSuccess(listHashMap);
     }
@@ -84,7 +84,7 @@ public class UserController {
      * @return The message indicating the confirmation on updated instructor entity.
      */
     @PatchMapping("/{id}")
-    @PreAuthorize("hasAnyAuthority('INSTRUCTOR','ADMIN')")
+    @PreAuthorize("hasAnyAuthority('USER','ADMIN')")
     public ResponseEntity<RestResponse> update(@PathVariable long id,
                                                @Validated @RequestBody UserDTO userDTO) {
         String message = userService.update(id, userDTO);
@@ -92,7 +92,7 @@ public class UserController {
     }
 
     /**
-     * Deletes the instructor by id.
+     * Deletes the user by id.
      *
      * @param id The unique identifier of the entity.
      * @return The message indicating the confirmation on deleted instructor entity.
