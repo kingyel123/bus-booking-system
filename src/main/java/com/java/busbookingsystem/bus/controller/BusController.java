@@ -2,6 +2,7 @@ package com.java.busbookingsystem.bus.controller;
 
 import com.java.busbookingsystem.bus.constants.BusConstants;
 import com.java.busbookingsystem.bus.model.Bus;
+import com.java.busbookingsystem.bus.model.BusDTO;
 import com.java.busbookingsystem.bus.service.BusService;
 import com.java.busbookingsystem.utils.RestHelper;
 import com.java.busbookingsystem.utils.RestResponse;
@@ -23,39 +24,28 @@ public  class BusController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<RestResponse> saveBus(@Validated @RequestBody Bus bus){
-        try{
-            Bus saveBus = busservice.save(bus);
-            Map<String, Object> response = new HashMap<>();
-            response.put("bus", saveBus);
-            return RestHelper.responseSuccess(response);
-        } catch (Exception e){
-            return RestHelper.responseError(e.getMessage());
-        }
+    public ResponseEntity<RestResponse> save(@Validated @RequestBody Bus bus) {
+        Map<String, Object> listHashMap = new HashMap<>();
+        listHashMap.put("bus", busservice.save(bus));
+        return RestHelper.responseSuccess(listHashMap);
     }
+
 
     @GetMapping
     @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')") // Allow both USER and ADMIN roles
-    public ResponseEntity<List<Bus>> getAllBus() {
-        List<Bus> bus = busservice.findAll();
-        if (bus.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(bus);
+    public ResponseEntity<RestResponse> findAll() {
+        HashMap<String, Object> listHashMap = new HashMap<>();
+        listHashMap.put("bus", busservice.findAll());
+        return RestHelper.responseSuccess(listHashMap);
     }
 
     // GET endpoint to fetch a movie by ID
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')") // Allow both USER and ADMIN roles
-    public ResponseEntity<RestResponse> getBusbyId(@PathVariable long id){
-        try {
-            Bus bus = busservice.findById(id);
-            Map<String, Object> response = new HashMap<>();
-            response.put("bus", bus);
-            return RestHelper.responseSuccess(response);
-        } catch (Exception e){
-            return RestHelper.responseError(BusConstants.NOT_FOUND);
-        }
+    public ResponseEntity<RestResponse> findById(@PathVariable long id) {
+        Map<String, Object> listHashMap = new HashMap<>();
+        listHashMap.put("bus", busservice.fetchById(id));
+        return RestHelper.responseSuccess(listHashMap);
     }
 
     @DeleteMapping("/{id}")
@@ -69,10 +59,12 @@ public  class BusController {
 
     @PatchMapping("put/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<Bus> updateBus(@PathVariable Long id, @Validated @RequestBody Bus bus) {
-        Bus busUpdate = busservice.updateBus(id, bus);
-        return ResponseEntity.ok(busUpdate);
+    public ResponseEntity<RestResponse> update(@PathVariable long id,
+                                               @Validated @RequestBody BusDTO busDTO) {
+        String message = busservice.update(id, busDTO);
+        return RestHelper.responseMessage(message);
     }
+
 }
 
 
