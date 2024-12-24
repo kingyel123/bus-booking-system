@@ -34,10 +34,6 @@ public class User extends AuditEntity {
 
     private String address;
 
-
-
-
-
     @NotBlank(message = "Email is required and cannot be empty")
     @Email(message = "Invalid email format")
     @Column(unique = true)
