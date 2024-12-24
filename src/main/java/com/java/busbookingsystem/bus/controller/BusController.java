@@ -22,8 +22,8 @@ public  class BusController {
     private BusService busservice;
 
     @PostMapping
-    @PreAuthorize("hasAuthority('ADMIN')") // Only admin can create movies
-    public ResponseEntity<RestResponse> saveMovie(@Validated @RequestBody Bus bus){
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<RestResponse> saveBus(@Validated @RequestBody Bus bus){
         try{
             Bus saveBus = busservice.save(bus);
             Map<String, Object> response = new HashMap<>();
@@ -36,10 +36,10 @@ public  class BusController {
 
     @GetMapping
     @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')") // Allow both USER and ADMIN roles
-    public ResponseEntity<List<Bus>> getAllMovies() {
+    public ResponseEntity<List<Bus>> getAllBus() {
         List<Bus> bus = busservice.findAll();
         if (bus.isEmpty()) {
-            return ResponseEntity.noContent().build(); // Return 204 No Content if no movies found
+            return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(bus);
     }
@@ -47,7 +47,7 @@ public  class BusController {
     // GET endpoint to fetch a movie by ID
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')") // Allow both USER and ADMIN roles
-    public ResponseEntity<RestResponse> getMovieId(@PathVariable long id){
+    public ResponseEntity<RestResponse> getBusbyId(@PathVariable long id){
         try {
             Bus bus = busservice.findById(id);
             Map<String, Object> response = new HashMap<>();
@@ -59,18 +59,16 @@ public  class BusController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')") // Only admin can create movies
-    public ResponseEntity<String> deleteMovieById(@PathVariable long id) {
-        try {
-            busservice.deleteById(id);
-            return ResponseEntity.ok("Movie deleted successfully."); // Return 200 OK with success message
-        } catch (Exception e) {
-            return ResponseEntity.status(404).body(BusConstants.NOT_FOUND); // Return 404 if the movie is not found
-        }
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<RestResponse> deleteBusbyId(@PathVariable long id) {
+        String message = busservice.deleteById(id);
+        return RestHelper.responseMessage(message);
+
+
     }
 
     @PatchMapping("put/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')") // Only admin can create movies
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Bus> updateBus(@PathVariable Long id, @Validated @RequestBody Bus bus) {
         Bus busUpdate = busservice.updateBus(id, bus);
         return ResponseEntity.ok(busUpdate);

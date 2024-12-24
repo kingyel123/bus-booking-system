@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.java.busbookingsystem.bus.constants.BusConstants.DELETE_SUCCESSFUL;
+
 @Service
 public class BusService implements IBusService{
    @Autowired
@@ -75,7 +77,7 @@ public class BusService implements IBusService{
     public String deleteById(long id) {
         Bus bus = findById(id);
         busrepository.delete(bus);
-        return null;
+        return String.format(DELETE_SUCCESSFUL);
     }
 
     @Override
