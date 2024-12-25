@@ -4,7 +4,7 @@ package com.java.busbookingsystem.users.controller;
 
 import com.java.busbookingsystem.users.model.User;
 import com.java.busbookingsystem.users.model.UserDTO;
-import com.java.busbookingsystem.users.service.UserService;
+import com.java.busbookingsystem.users.service.UserServiceImpl;
 import com.java.busbookingsystem.utils.RestHelper;
 import com.java.busbookingsystem.utils.RestResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ import java.util.Map;
 @RequestMapping("api/v1/users")
 public class UserController {
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     /**
      * Fetch self info of the user

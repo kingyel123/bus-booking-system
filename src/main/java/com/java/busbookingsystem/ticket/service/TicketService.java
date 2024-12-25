@@ -1,16 +1,12 @@
 package com.java.busbookingsystem.ticket.service;
 
 
-import com.java.busbookingsystem.bus.mapper.BusMapper;
-import com.java.busbookingsystem.bus.model.Bus;
-import com.java.busbookingsystem.bus.model.BusDTO;
 import com.java.busbookingsystem.ticket.Repository.TicketRepository;
 import com.java.busbookingsystem.ticket.mapper.TicketMapper;
 import com.java.busbookingsystem.ticket.model.Ticket;
 import com.java.busbookingsystem.ticket.model.TicketDTO;
 import com.java.busbookingsystem.users.model.User;
-import com.java.busbookingsystem.users.model.UserDTO;
-import com.java.busbookingsystem.users.service.UserService;
+import com.java.busbookingsystem.users.service.UserServiceImpl;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +20,7 @@ public class TicketService implements ITicketService{
     private TicketRepository ticketRepository;
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
 
     @Override

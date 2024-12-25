@@ -1,6 +1,6 @@
 package com.java.busbookingsystem.utils.constants;
 
-public class InstructorConstants {
+public class UserConstants {
 
     public static final String NOT_FOUND_MESSAGE = "%s not found.";
     public static final String USER_LABEL = "USER";

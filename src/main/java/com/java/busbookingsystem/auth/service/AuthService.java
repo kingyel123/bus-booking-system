@@ -4,7 +4,7 @@ import com.java.busbookingsystem.auth.helper.JwtService;
 import com.java.busbookingsystem.auth.helper.UserInfoService;
 import com.java.busbookingsystem.auth.model.AuthRequest;
 import com.java.busbookingsystem.users.model.User;
-import com.java.busbookingsystem.users.service.UserService;
+import com.java.busbookingsystem.users.service.UserServiceImpl;
 import com.java.busbookingsystem.utils.exception.GlobalExceptionWrapper;
 import io.jsonwebtoken.Claims;
 import lombok.NonNull;
@@ -28,7 +28,7 @@ public class AuthService {
     private JwtService jwtService;
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @Autowired
     private PasswordEncoder encoder;

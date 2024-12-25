@@ -1,9 +1,8 @@
 package com.java.busbookingsystem.bus.controller;
 
-import com.java.busbookingsystem.bus.constants.BusConstants;
 import com.java.busbookingsystem.bus.model.Bus;
 import com.java.busbookingsystem.bus.model.BusDTO;
-import com.java.busbookingsystem.bus.service.BusService;
+import com.java.busbookingsystem.bus.service.BusServiceImpl;
 import com.java.busbookingsystem.utils.RestHelper;
 import com.java.busbookingsystem.utils.RestResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,14 +12,13 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1/bus")
 public  class BusController {
     @Autowired
-    private BusService busservice;
+    private BusServiceImpl busservice;
 
     @PostMapping
     @PreAuthorize("hasAuthority('ADMIN')")
