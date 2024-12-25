@@ -1,11 +1,14 @@
 package com.java.busbookingsystem.ticket.controller;
 
 
+import com.java.busbookingsystem.ticket.mapper.TicketMapper;
 import com.java.busbookingsystem.ticket.model.Ticket;
 import com.java.busbookingsystem.ticket.model.TicketDTO;
 import com.java.busbookingsystem.ticket.service.TicketService;
 import com.java.busbookingsystem.utils.RestHelper;
 import com.java.busbookingsystem.utils.RestResponse;
+import com.java.busbookingsystem.utils.exception.GlobalExceptionWrapper;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,6 +17,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+
+
+
 
 @RestController
 @RequestMapping("api/v1/ticket")
@@ -37,6 +43,20 @@ public  class TicketController {
         listHashMap.put("tickets", ticketService.findAll());
         return RestHelper.responseSuccess(listHashMap);
     }
+
+    @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN',)")
+    public ResponseEntity<RestResponse> findById(@PathVariable long id) {
+        HashMap<String, Object> listHashMap = new HashMap<>();
+        listHashMap.put("ticket", ticketService.fetchById(id));
+        return RestHelper.responseSuccess(listHashMap);
+
+    }
+
+
+
+
+
 
 
 }

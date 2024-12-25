@@ -37,4 +37,12 @@ public class Ticket {
     @JoinColumn(name = "user_id")  // This ensures the foreign key relationship
     private User user;
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public User getUser() {
+        return user;
+    }
 }
+    

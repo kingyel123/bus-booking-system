@@ -15,6 +15,7 @@ public class UserInfoDetails implements UserDetails {
     private final String password;
     private final List<GrantedAuthority> authorities;
 
+
     /**
      * Initializes the parameterized constructor
      *
