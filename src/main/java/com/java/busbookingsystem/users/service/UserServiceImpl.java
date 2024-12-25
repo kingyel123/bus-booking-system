@@ -20,11 +20,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static com.java.busbookingsystem.utils.constants.InstructorConstants.*;
+import static com.java.busbookingsystem.utils.constants.UserConstants.*;
 
 
 @Service
-public class UserService implements IUserService{
+public class UserServiceImpl implements IUserService{
 
     @Autowired
     private PasswordEncoder encoder;
@@ -102,6 +102,13 @@ public class UserService implements IUserService{
         this.userRepository.save(authenticatedUser);
         return String.format(UPDATED_SUCCESSFULLY_MESSAGE, USER);
     }
+
+    @Override
+    public String updateEntity(User user) {
+        this.userRepository.save(user);
+        return String.format(UPDATED_SUCCESSFULLY_MESSAGE, USER);
+    }
+
 
     @Override
     @Transactional

@@ -15,7 +15,7 @@ import java.util.List;
 import static com.java.busbookingsystem.bus.constants.BusConstants.*;
 
 @Service
-public class BusService implements IBusService{
+public class BusServiceImpl implements IBusService{
    @Autowired
     private BusRepository busrepository;
 
