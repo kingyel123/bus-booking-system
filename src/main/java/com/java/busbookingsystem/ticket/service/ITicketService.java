@@ -6,4 +6,5 @@ import com.java.busbookingsystem.ticket.model.TicketDTO;
 
 
 public interface ITicketService extends IGenericCrudService<Ticket, TicketDTO> {
+
 }
