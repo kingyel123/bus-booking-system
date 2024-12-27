@@ -53,6 +53,15 @@ public  class TicketController {
 
     }
 
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
+    public ResponseEntity<RestResponse> delete(@PathVariable long id) {
+        String message = ticketService.deleteById(id);
+        return RestHelper.responseMessage(message);
+    }
+
+
+
 
 
 
