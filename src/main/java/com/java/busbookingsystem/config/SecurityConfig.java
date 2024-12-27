@@ -43,7 +43,12 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST,"/api/v1/auth/login","/api/v1/auth/sign-up",
                                 "/api/v1/auth/forgot-password", "/api/v1/auth/reset-password").permitAll()
-                        .anyRequest().authenticated() // Protect all other endpoints
+                        .requestMatchers("/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/webjars/**",
+                                "/swagger-resources/**").permitAll()
+                        .anyRequest().authenticated()
                 )
                 .sessionManagement(sessionManager -> sessionManager
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // No sessions
