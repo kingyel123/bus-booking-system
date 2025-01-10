@@ -10,10 +10,14 @@ import lombok.NoArgsConstructor;
 public class TicketDTO {
     private long id;
     private String busNo;
-    private long seatNo;
-    private String source;
+    private Long seatNo;
     private String destination;
-    private String departureTime;
+    private String departureFrom;
+    private long price;
+    private String model;
+    private String brand;
+    private String amenities;
+    private String departure;
     private Long userId;
 
 }

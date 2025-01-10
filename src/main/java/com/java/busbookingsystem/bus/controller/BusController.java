@@ -2,6 +2,7 @@ package com.java.busbookingsystem.bus.controller;
 
 import com.java.busbookingsystem.bus.model.Bus;
 import com.java.busbookingsystem.bus.model.BusDTO;
+import com.java.busbookingsystem.bus.model.Seat;
 import com.java.busbookingsystem.bus.service.BusServiceImpl;
 import com.java.busbookingsystem.utils.RestHelper;
 import com.java.busbookingsystem.utils.RestResponse;
@@ -12,6 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -63,6 +65,21 @@ public  class BusController {
         return RestHelper.responseMessage(message);
     }
 
+    @PostMapping("/{busId}/seats/{seatNumber}/book")
+    @PreAuthorize("hasAuthority('USER')")
+    public ResponseEntity<RestResponse> bookSeat(@PathVariable Long busId, @PathVariable int seatNumber) {
+
+            String message = busservice.bookSeat(busId, seatNumber);
+            return RestHelper.responseMessage(message);
+    }
+
+    @GetMapping("/{busId}/seats")
+    @PreAuthorize("hasAuthority('USER')")
+    public ResponseEntity<List<Seat>> getSeats(@PathVariable long busId) {
+            List<Seat> seats = busservice.getSeats(busId);
+            return ResponseEntity.ok(seats);
+
+    }
 }
 
 

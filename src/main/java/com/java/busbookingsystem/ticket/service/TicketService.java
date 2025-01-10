@@ -63,6 +63,13 @@ public class TicketService implements ITicketService{
         return TicketMapper.toDTO(ticket);
     }
 
+    @Override
+    public List<TicketDTO> findByUser () {
+        User user = userService.fetchSelfInfo(); // Get the current user
+        List<Ticket> tickets = this.ticketRepository.findByUser (user); // Fetch tickets for the user
+        return TicketMapper.toDTO(tickets); // Convert to DTO and return
+    }
+
 
     @Override
     public String deleteById(long id) {

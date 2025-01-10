@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Date;
 import java.sql.Time;
 
 @Data
@@ -20,4 +21,6 @@ public class BusDTO {
     private String model;
     private String brand;
     private String amenities;
-    private long price;}
+    private long price;
+    private Date date;
+}
