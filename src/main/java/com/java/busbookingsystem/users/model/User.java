@@ -1,13 +1,10 @@
 package com.java.busbookingsystem.users.model;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.java.busbookingsystem.ticket.model.Ticket;
 import com.java.busbookingsystem.utils.AuditEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -16,6 +13,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -45,6 +44,19 @@ public class User extends AuditEntity {
     private String roles;
 
 
+    // Declare the tickets field
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Ticket> tickets; // Add this line
+
+    // Getters and Setters
+    public List<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<Ticket> tickets) {
+        this.tickets = tickets;
+    }
     public long getId() {
         return id;
     }

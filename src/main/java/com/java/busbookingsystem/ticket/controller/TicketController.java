@@ -16,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -42,6 +43,12 @@ public  class TicketController {
         HashMap<String, Object> listHashMap = new HashMap<>();
         listHashMap.put("tickets", ticketService.findAll());
         return RestHelper.responseSuccess(listHashMap);
+    }
+
+    @GetMapping("/user")
+    public ResponseEntity<List<TicketDTO>> getUserTickets() {
+        List<TicketDTO> tickets = ticketService.findByUser ();
+        return ResponseEntity.ok(tickets);
     }
 
     @GetMapping("/{id}")
